@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh_cn">
+<head>
+	<meta charset="UTF-8">
+	<title>H5 CANVAS Class Grid</title>
+	<style type="text/css">
+		canvas {
+			border: 1px solid #c1c1c1c;
+			display: block;
+		}
+		#canvas1{
+			border: 1px solid #ffc1c1;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas1" width="700" height="700">您的浏览器版本低无法支持CANVAS</canvas>
+	<script type="text/javascript">
+	window.onload = function(){
+		//init
+		var canvas1 = document.getElementById("canvas1");
+		var ctx1 = canvas1.getContext('2d');
+			drawGrid( canvas1.width, canvas1.height, ctx1, 20, 20 );
+	}
+
+	/*
+	 * 根据指定的width跟height来自动绘制网格
+	 * width 		画布的宽度，默认浏览器可视区域宽度
+	 * height 		画布的高度，默认浏览器可视区域高度
+	 * ctx 			画布对象，默认获取ID为canvas-grid画布
+	 * row 			网格行，默认2行
+	 * column 		网格列，默认2列
+	 */
+	function drawGrid( width, height, ctx, row, column ){
+		console.log( 'width = '+width+', height = '+height+', ctx = '+ctx+', row = '+row+', column = '+column );
+		if( ctx == undefined ){
+			ctx = document.getElementById('canvas-grid');
+			if( ctx == undefined ){alert('ERROR : NOT HAVE CANVAS OBJECT');return false;}
+			this.ctx = ctx.getContext('2d');
+		}else this.ctx = ctx;
+		var w = width || document.body.clientWidth,
+			h = height || document.body.clientHeight,
+			row = row || 2,
+			column = column || 2;
+		var rowW = w / row,
+			rowH = h / column;
+		var dX = 0,
+			dY = 0;
+		//
+		console.log( 'width = '+w+', height = '+h+', , row = '+row+', column = '+column+', rowW = '+rowW+', rowH = '+rowH );
+		//
+		with( ctx ){
+			strokeStyle = 'rgba( 11,11,11,0.1)';
+			lineWidth = 1;
+		}
+		//
+		for( var i = 1;i< column;i++ ){
+			console.log( 'ID : ' + i + '; x : ' + 0 + '; y : ' + rowH * i );
+			dX = rowH * i;
+			with( ctx ){
+				beginPath();
+				moveTo( 0, dX );
+				lineTo( w, dX );
+				stroke();	
+			}
+			
+		}
+		for( var j = 1;j< row;j++ ){
+			console.log( 'ID : ' + i + '; x : ' + rowW * j + '; y : ' + 0 );
+			dY = rowW * j;
+			with( ctx ){
+				beginPath();
+				moveTo( dY, 0 );
+				lineTo( dY, h );
+				stroke();
+			}
+		}
+	}
+	</script>
+</body>
+</html>
